@@ -28,6 +28,7 @@ def toevoegen():
         try:
             prijs_as_an_integer = int(prijs)
             boodschappen[product] = int(prijs)
+            print("Je product is toegevoegd.")
 
         except ValueError:
             print("Dat is geen nummer.")
@@ -37,7 +38,9 @@ def verwijder():
     delete = input("Welk product wil je verwijderen? ")
     if delete not in boodschappen:
         print("Sorry, maar dat is geen product.")
-    else: del boodschappen[delete]
+    else:
+        del boodschappen[delete]
+        print("Het product is verwijderd.")
 
 #hiermee kan je een al bestaand product van de library te wijzigen.
 def wijzig():
@@ -54,6 +57,7 @@ def wijzig():
                 anders_as_an_integer = int(anders)
                 del boodschappen[change]
                 boodschappen[verander] = int(anders)
+                print("Het product is gewijzigd.")
                 wijziging = False
 
             except ValueError:
