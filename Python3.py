@@ -1,4 +1,5 @@
 from lijst import boodschappen
+
 def menu():
     print("""1. Bekijk alle producten.
 
@@ -8,33 +9,71 @@ def menu():
 
 4. Wijzig een product.
 
-5. Boodschappen doen.""")
+5. Boodschappen doen.
 
+type 'stop' om te stoppen.""")
+
+#hiermee toont het programma een lijst van de producten die op dat moment in de library zijn.
 def toon_lijst():
     for key, value in boodschappen.items():
                 print(key, value)
+
+#hiermee kan je een product aan de library toevoegen.
 def toevoegen():
     product = input("Welk product wil je toe voegen? ")
-    prijs = int(input("Hoeveel kost het? "))    
-    boodschappen[product] = prijs
+    if product in boodschappen:
+        print("Sorry, maar dat is geen product.")
+    else:
+        prijs = input("Hoeveel kost het? ")
+        try:
+            prijs_as_an_integer = int(prijs)
+            boodschappen[product] = int(prijs)
+
+        except ValueError:
+            print("Dat is geen nummer.")
+
+#hiermee is het mogelijk om een al bestaand product van de library te verwijderen.
 def verwijder():
     delete = input("Welk product wil je verwijderen? ")
-    del boodschappen[delete]
+    if delete not in boodschappen:
+        print("Sorry, maar dat is geen product.")
+    else: del boodschappen[delete]
+
+#hiermee kan je een al bestaand product van de library te wijzigen.
 def wijzig():
-    change = input("Welk product wil je wijzigen? ")
-    verander = input("Wat is de nieuwe naam? ")
-    anders = input("Wat is de nieuwe prijs? ")
-    del boodschappen[change]
-    boodschappen[verander] = anders
+    wijziging = True
+    while wijziging:
+        change = input("Welk product wil je wijzigen? ")
+        if change not in boodschappen:
+            print("Sorry, maar dat is geen product.")
+            wijziging = False
+        else:
+            verander = input("Wat is de nieuwe naam? ")
+            anders = input("Wat is de nieuwe prijs? ")
+            try:
+                anders_as_an_integer = int(anders)
+                del boodschappen[change]
+                boodschappen[verander] = int(anders)
+                wijziging = False
+
+            except ValueError:
+                print("Dat is geen nummer.")
+                wijziging = False
+
+#hiermee kan je de producten die op dat moment in de library zitten kopen.
 def boodschappen_doen():
     totaal = []
     Kopen = True
+    print("type 'stop' om te stoppen.")
     while Kopen:
         koop = input("Wat wil je kopen? ")
         if koop == "stop":
             print("De totaal prijs van je boodschappen is" , sum(totaal), "euro.")
             Kopen = False
+        elif koop not in boodschappen:
+            print("Sorry dat is niet beschikbaar")
         else: totaal.append(boodschappen[koop])
+
 def main():
     Run = True
     while Run:
@@ -53,4 +92,5 @@ def main():
             boodschappen_doen()
         elif start == "stop":
             Run = False
+
 main()
